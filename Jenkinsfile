@@ -1,21 +1,22 @@
 pipeline {
     // Use the 'agent' directive to define the execution environment
-    agent {
-        label 'build-agent' // Specify a specific agent/node label
-    }
+	  agent any
+//    agent {
+//        label 'build-agent' // Specify a specific agent/node label
+//    }
 
     // Define global environment variables for consistency
-    environment {
-        BUILD_TIMESTAMP = "${new Date().format('yyyy-MM-dd_HH-mm-ss')}" // Timestamp for logs/artifacts
-        APP_NAME = 'MyApplication' // Example application name
-    }
-
+//    environment {
+//        BUILD_TIMESTAMP = "${new Date().format('yyyy-MM-dd_HH-mm-ss')}" // Timestamp for logs/artifacts
+//        APP_NAME = 'MyApplication' // Example application name
+//    }
+//
     // Set up options for build timeout and logging
-    options {
-        timeout(time: 30, unit: 'MINUTES') // Avoid hanging builds
-        timestamps() // Add timestamps to logs for easier debugging
-        ansiColor('xterm') // Colorize console output
-    }
+//    options {
+//       timeout(time: 30, unit: 'MINUTES') // Avoid hanging builds
+//        timestamps() // Add timestamps to logs for easier debugging
+//        ansiColor('xterm') // Colorize console output
+//    }
 
     stages {
         // Stage 1: Prepare environment
