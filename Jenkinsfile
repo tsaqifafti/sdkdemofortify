@@ -80,26 +80,26 @@ pipeline {
     }
 
     // Post-actions for cleanup and notifications
-    post {
-        always {
-            echo "Cleaning up workspace..."
-            cleanWs() // Clean workspace after every build
-        }
-
-        success {
-            echo "Build completed successfully at ${BUILD_TIMESTAMP}."
-        }
-
-        failure {
-            echo "Build failed. Please check logs for more details."
-        }
-
-        unstable {
-            echo "Build is unstable. Review warnings or test results."
-        }
-
-        aborted {
-            echo "Build was aborted by user or timeout."
-        }
-    }
-}
+//    post {
+//        always {
+//            echo "Cleaning up workspace..."
+//            cleanWs() // Clean workspace after every build
+//        }
+//
+//        success {
+//            echo "Build completed successfully at ${BUILD_TIMESTAMP}."
+//        }
+//
+//        failure {
+//            echo "Build failed. Please check logs for more details."
+//        }
+//
+//        unstable {
+//            echo "Build is unstable. Review warnings or test results."
+//        }
+//
+//        aborted {
+//            echo "Build was aborted by user or timeout."
+//        }
+//    }
+// }
