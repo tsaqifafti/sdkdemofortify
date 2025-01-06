@@ -23,7 +23,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
-                    echo "Preparing environment for ${APP_NAME}..."
+                    echo "Preparing environment for ..."
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    echo "Building ${APP_NAME}..."
+                    echo "Building "
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    echo "Running tests for ${APP_NAME}..."
+                    echo "Running tests for "
                 }
             }
         }
@@ -60,7 +60,7 @@ pipeline {
         stage('Package') {
             steps {
                 script {
-                    echo "Packaging ${APP_NAME}..."
+                    echo "Packaging "
                 }
             }
         }
@@ -72,8 +72,8 @@ pipeline {
             }
             steps {
                 script {
-                    echo "Deploying ${APP_NAME}..."
-                    sh './deploy.sh' // Example deployment script
+                    echo "Deploying"
+//                    sh './deploy.sh' // Example deployment script
                 }
             }
         }
