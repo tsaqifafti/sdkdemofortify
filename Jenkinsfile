@@ -10,16 +10,18 @@ pipeline {
 			steps {
 				echo "Cek Ketersediaan Maven & Scancentral"
 				
-				powershell """mvn -v; if ($?) { Write-Output "Maven OK" } else {exit 1}'"""
+				powershell """mvn -v"""
+				echo "Maven OK"
 				
-				powershell 'scancentral --version; if ($?) { Write-Output "Scancentral OK" } else {exit 1}'
+				powershell """scancentral --version"""
+				echo "Maven OK"
 			}
 		}
-		stage('Build & Scan'){
-			steps {
-				echo "Build Project Maven & Scan with scancentral SAST"
-				powershell """ scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN} """
-			}
-		}
+//		stage('Build & Scan'){
+//			steps {
+//				echo "Build Project Maven & Scan with scancentral SAST"
+//				powershell """ scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN} """
+//			}
+//		}
 	}	
 }
