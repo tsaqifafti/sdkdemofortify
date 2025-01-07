@@ -11,16 +11,18 @@ pipeline {
 				echo "Cek Ketersediaan Maven & Scancentral"
 				
 				bat 'mvn -v'
-				echo "Maven OK"
 				
 				bat 'scancentral --version'
 			}
 		}
-//		stage('Build & Scan'){
-//			steps {
-//				echo "Build Project Maven & Scan with scancentral SAST"
-//				bat 'scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN}'
-//			}
-//		}
+		stage('Build & Scan'){
+		steps {
+				echo "Build Project Maven & Scan with scancentral SAST"
+
+				bat 'cd C:\Users\Administrator\Downloads\FortifyAWSJavaSDKDemo-master\FortifyAWSJavaSDKDemo-master'
+
+				bat 'scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN}'
+			}
+		}
 	}	
 }
