@@ -10,10 +10,10 @@ pipeline {
 			steps {
 				echo "Cek Ketersediaan Maven & Scancentral"
 				
-				powershell """mvn -v"""
+				bat 'mvn -v'
 				echo "Maven OK"
 				
-				powershell """scancentral --version"""
+				bat 'cancentral --version'
 				echo "Maven OK"
 			}
 		}
