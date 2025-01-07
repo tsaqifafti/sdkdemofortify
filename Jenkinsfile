@@ -13,13 +13,13 @@ pipeline {
 				bat 'mvn -v'
 				echo "Maven OK"
 				
-				bat 'cancentral --version'
+				bat 'scancentral --version'
 			}
 		}
 //		stage('Build & Scan'){
 //			steps {
 //				echo "Build Project Maven & Scan with scancentral SAST"
-//				powershell """ scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN} """
+//				bat 'scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN}'
 //			}
 //		}
 	}	
