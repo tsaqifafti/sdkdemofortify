@@ -1,105 +1,28 @@
 pipeline {
-    // Use the 'agent' directive to define the execution environment
-	  agent any
-//    agent {
-//        label 'build-agent' // Specify a specific agent/node label
-//    }
-
-    // Define global environment variables for consistency
-//    environment {
-//        BUILD_TIMESTAMP = "${new Date().format('yyyy-MM-dd_HH-mm-ss')}" // Timestamp for logs/artifacts
-//        APP_NAME = 'MyApplication' // Example application name
-//    }
-//
-    // Set up options for build timeout and logging
-//    options {
-//       timeout(time: 30, unit: 'MINUTES') // Avoid hanging builds
-//        timestamps() // Add timestamps to logs for easier debugging
-//        ansiColor('xterm') // Colorize console output
-//    }
-
-    stages {
-        // Stage 1: Prepare environment
-        stage('Prepare') {
-            steps {
-                script {
-                    echo "Preparing environment for ..."
-                }
-            }
-        }
-
-        // Stage 2: Checkout source code from repository
-        stage('Checkout Code') {
-            steps {
-                checkout scm // Use source code from the job's configuration
-                script {
-                    echo "Code checked out successfully."
-                }
-            }
-        }
-
-        // Stage 3: Build application
-        stage('Build') {
-            steps {
-                script {
-                    echo "Building "
-                }
-            }
-        }
-
-        // Stage 4: Run tests
-        stage('Test') {
-            steps {
-                script {
-                    echo "Running tests for "
-                }
-            }
-        }
-
-        // Stage 5: Package application (optional)
-        stage('Package') {
-            steps {
-                script {
-                    echo "Packaging "
-                }
-            }
-        }
-
-        // Stage 6: Deploy application (optional)
-        stage('Deploy') {
-            when {
-                branch 'main' // Only deploy from the main branch
-            }
-            steps {
-                script {
-                    echo "Deploying"
-//                    sh './deploy.sh' // Example deployment script
-                }
-            }
-        }
-    }
-
-    // Post-actions for cleanup and notifications
-//    post {
-//        always {
-//            echo "Cleaning up workspace..."
-//            cleanWs() // Clean workspace after every build
-//        }
-//
-//        success {
-//            echo "Build completed successfully at ${BUILD_TIMESTAMP}."
-//        }
-//
-//        failure {
-//            echo "Build failed. Please check logs for more details."
-//        }
-//
-//        unstable {
-//            echo "Build is unstable. Review warnings or test results."
-//        }
-//
-//        aborted {
-//            echo "Build was aborted by user or timeout."
-//        }
-//    }
+	agent any
+	environment {
+			CONTROLLER_URL = "http://192.168.1.186:8080/scancentral-ctrl"
+			VERSION_ID = "10002"
+			UPLOAD_TOKEN = "f2a08e91-3e45-4d1f-963a-0efde16f1a31"
+	}
+	stages {
+		stage('Prepare Environment'){
+			steps {
+				echo "Cek Ketersediaan Maven & Scancentral"
+				script {
+				powershell 'mvn -v; if ($?) { Write-Output "Maven OK" } else {exit 1}'
+				
+				powershell 'scancentral --version; if ($?) { Write-Output "Scancentral OK" } else {exit 1}'
+				}
+			}
+		}
+	}
+	stages {
+		stage('Build & Scan'){
+			steps {
+				echo "Build Project Maven & Scan with scancentral SAST"
+				powershell """ scancentral -url ${CONTROLLER_URL} start -bt mvn -upload -versionid ${VERSION_ID} -uptoken ${UPLOAD_TOKEN} """
+			}
+		}
+	}
 }
