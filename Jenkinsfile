@@ -9,11 +9,10 @@ pipeline {
 		stage('Prepare Environment'){
 			steps {
 				echo "Cek Ketersediaan Maven & Scancentral"
-				script {
-				powershell 'mvn -v; if ($?) { Write-Output "Maven OK" } else {exit 1}'
+				
+				powershell """mvn -v; if ($?) { Write-Output "Maven OK" } else {exit 1}'"""
 				
 				powershell 'scancentral --version; if ($?) { Write-Output "Scancentral OK" } else {exit 1}'
-				}
 			}
 		}
 		stage('Build & Scan'){
