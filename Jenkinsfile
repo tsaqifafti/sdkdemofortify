@@ -4,7 +4,7 @@ pipeline {
 			CONTROLLER_URL = "http://192.168.1.186:8080/scancentral-ctrl"
 			VERSION_ID = "10002"
 			UPLOAD_TOKEN = "f2a08e91-3e45-4d1f-963a-0efde16f1a31"
-			TARGER_DIR = "C:\\Users\\Administrator\\Downloads\\FortifyAWSJavaSDKDemo-master\\FortifyAWSJavaSDKDemo-master"
+			TARGET_DIR = "C:\\Users\\Administrator\\Downloads\\FortifyAWSJavaSDKDemo-master\\FortifyAWSJavaSDKDemo-master"
 	}
 	stages {
 		stage('Prepare Environment'){
