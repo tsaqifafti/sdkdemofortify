@@ -1,34 +1,21 @@
 pipeline {
+//  agent { label 'master' }  // Menjalankan pipeline di master node
 	agent any
-	environment {
-//			CONTROLLER_URL = "http://192.168.1.183:8081/scancentral-ctrl"
-//			VERSION_ID = "10002"
-//			UPLOAD_TOKEN = "f2a08e91-3e45-4d1f-963a-0efde16f1a31"
-			TARGET_DIR = "C:\\Users\\Administrator\\Downloads\\FortifyAWSJavaSDKDemo-master\\FortifyAWSJavaSDKDemo-master"
-	}
-	stages {
-		stage('Prepare Environment'){
-			steps {
-				echo "Cek Ketersediaan Maven & Scancentral"
-				
-				bat 'mvn -v'
-				
-				bat 'scancentral --version'
-			}
-		}
-		stage('Build & Scan'){
-		steps {
-				echo "Build Project Maven & Scan with scancentral SAST"
+  stages {
+    stage('Fortify Remote Arguments') {
+      steps {
+        fortifyRemoteArguments transOptions: '-Xmx4G', 
+          scanOptions: '"-analyzers" "dataflow"' 
+      }
+    }
 
-				dir ("${TARGET_DIR}") {
-					bat 'scancentral -url http://192.168.1.183:8081/scancentral-ctrl start -bt mvn -upload -versionid 10002 -uptoken f2a08e91-3e45-4d1f-963a-0efde16f1a31'
-				}
-			}
-		}
-		stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-	}	
+    stage('Fortify Remote Analysis') {
+      steps {
+        fortifyRemoteAnalysis remoteAnalysisProjectType: fortifyMaven(buildFile: 'custom-pom.xml'),
+          remoteOptionalConfig: [notifyEmail: 'admin@company.com', 
+          customRulepacks: 'CustomRules.xml'],
+          uploadSSC: [appName: 'MyMavenApp', appVersion: '1.0']
+      }
+    }
+  }
 }
